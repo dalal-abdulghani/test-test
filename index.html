@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مراقبة المياه</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Cairo",sans-serif;
+}
+
+body{
+  background:#f3f4f6;
+
+}
+
+/* الحاوية */
+.container{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+}
+
+/* العنوان */
+.header{
+  text-align:center;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+/* الكارد */
+.card{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+/* الحالة */
+.status{
+  padding:12px;
+  border-radius:50px;
+  color:white;
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+.safe{
+  background:#22c55e;
+}
+
+.danger{
+  background:#ef4444;
+}
+
+/* زر */
+.btn{
+  margin-top:20px;
+  padding:5px 22px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.imge{
+  width: 100px;
+  height: 100px;
+}
+.btn-main{
+  background:#ef4444;
+  color:white;
+}
+
+/* الخريطة */
+.map{
+  position:relative;
+  width:100%;
+  height:400px;
+  border-radius:20px;
+  overflow:hidden;
+}
+.ree{
+  margin-bottom: 30px;
+}
+.map iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+/* الكارد فوق الخريطة */
+.overlay-card{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:300px;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* الأزرار */
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+  flex-wrap:wrap;
+}
+
+.btn-red{
+  flex:1;
+  background:#ef4444;
+  color:white;
+  padding:5px 6px ;
+
+}
+
+.btn-blue{
+  flex:1;
+  background:#3b82f6;
+  color:white;
+    padding:1px 6px ;
+}
+
+/* إخفاء */
+.hidden{
+  display:none;
+}
+
+/* 📱 موبايل */
+@media(max-width:400px){
+
+  .map{
+    height:300px;
+  }
+
+ 
+
+ 
+  .btn{
+  font-size: clamp(12px, 2vw, 14px);
+   width:100%;
+}
+
+  .header{
+    font-size:20px;
+  }
+.overlay-card{
+  width: 300px;
+  height: 220px;
+  
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- 🔹 الشاشة الأولى -->
+  <div id="homeScreen">
+
+    <div class="header">💧 مراقبة المياه</div>
+
+    <div class="card">
+
+         <div class="ree">حالة النظام الحالية</div>
+
+      <div id="statusBox" class="status danger">
+        ⚠ يوجد تسرب
+      </div>
+<img class="imge" src="./image.png" alt="">
+  
+
+      <button class="btn btn-main" onclick="goToDetails()">
+        عرض التفاصيل
+      </button>
+
+    </div>
+  </div>
+
+  <!-- 🔹 الشاشة الثانية -->
+  <div id="detailsScreen" class="hidden">
+
+    <div class="header">📍 تفاصيل التسرب</div>
+
+    <div class="map">
+
+      <iframe src="https://maps.google.com/maps?q=21.5433,39.1728&z=15&output=embed"></iframe>
+
+      <div class="overlay-card">
+
+        <div class="status danger">⚠ تم رصد تسريب مياه في الموقع</div>
+
+        <div style="color:#ef4444;">الرجاء اتخاذ الاجراء المناسب : </div>
+
+        <div class="buttons">
+          <button class="btn btn-red">إغلاق المحبس الرئيسي</button>
+          <button class="btn btn-blue">إرسال فريق صيانة</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="btn" style="margin-top:15px;" onclick="goToHome()">
+      ← رجوع
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+function goToDetails(){
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("detailsScreen").classList.remove("hidden");
+}
+
+function goToHome(){
+  document.getElementById("detailsScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
