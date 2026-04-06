@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -17,10 +18,8 @@
 
 body{
   background:#f3f4f6;
-
 }
 
-/* الحاوية */
 .container{
   width:100%;
   max-width:900px;
@@ -28,7 +27,6 @@ body{
   padding:15px;
 }
 
-/* العنوان */
 .header{
   text-align:center;
   font-size:24px;
@@ -36,13 +34,12 @@ body{
   margin-bottom:20px;
 }
 
-/* الكارد */
 .card{
   width:100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
   background:white;
   padding:40px;
   border-radius:20px;
@@ -50,7 +47,6 @@ body{
   text-align:center;
 }
 
-/* الحالة */
 .status{
   padding:12px;
   border-radius:50px;
@@ -67,7 +63,6 @@ body{
   background:#ef4444;
 }
 
-/* زر */
 .btn{
   margin-top:20px;
   padding:5px 22px;
@@ -75,18 +70,28 @@ body{
   border-radius:50px;
   cursor:pointer;
   font-size:14px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+  transform: scale(0.95);
 }
 
 .imge{
   width: 100px;
   height: 100px;
 }
+
 .btn-main{
   background:#ef4444;
   color:white;
 }
 
-/* الخريطة */
 .map{
   position:relative;
   width:100%;
@@ -94,19 +99,21 @@ body{
   border-radius:20px;
   overflow:hidden;
 }
+
 .ree{
-  margin-bottom: 30px;
+  margin-bottom:30px;
 }
+
 .map iframe{
   width:100%;
   height:100%;
   border:none;
 }
 
-/* الكارد فوق الخريطة */
+/* ✨ الكارد الأساسي */
 .overlay-card{
   position:absolute;
-  top:20px;
+  bottom:-120px;
   left:50%;
   transform:translateX(-50%);
   width:90%;
@@ -116,9 +123,22 @@ body{
   padding:20px;
   text-align:center;
   box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  opacity:0;
+  transition: all 0.5s ease;
 }
 
-/* الأزرار */
+/* ✨ يظهر */
+.overlay-card.show{
+  bottom:20px;
+  opacity:1;
+}
+
+/* ✨ كارد النجاح */
+.success-card{
+  background:#f0fdf4;
+  color:#166534;
+}
+
 .buttons{
   display:flex;
   gap:10px;
@@ -130,45 +150,38 @@ body{
   flex:1;
   background:#ef4444;
   color:white;
-  padding:5px 6px ;
-
+  padding:5px 6px;
 }
 
 .btn-blue{
   flex:1;
   background:#3b82f6;
   color:white;
-    padding:1px 6px ;
+  padding:5px 6px;
 }
 
-/* إخفاء */
 .hidden{
   display:none;
 }
 
-/* 📱 موبايل */
 @media(max-width:400px){
-
   .map{
     height:300px;
   }
 
- 
-
- 
   .btn{
-  font-size: clamp(12px, 2vw, 14px);
-   width:100%;
-}
+    font-size: clamp(12px, 2vw, 14px);
+    width:100%;
+  }
 
   .header{
     font-size:20px;
   }
-.overlay-card{
-  width: 300px;
-  height: 220px;
-  
-}
+
+  .overlay-card{
+    width:300px;
+    height:220px;
+  }
 }
 </style>
 </head>
@@ -177,29 +190,26 @@ body{
 
 <div class="container">
 
-  <!-- 🔹 الشاشة الأولى -->
+  <!-- الشاشة الأولى -->
   <div id="homeScreen">
-
     <div class="header">💧 مراقبة المياه</div>
 
     <div class="card">
-
-         <div class="ree">حالة النظام الحالية</div>
+      <div class="ree">حالة النظام الحالية</div>
 
       <div id="statusBox" class="status danger">
-        ⚠ يوجد تسرب
+        ⚠️ يوجد تسرب
       </div>
-<img class="imge" src="./image.png" alt="">
-  
+
+      <img class="imge" src="لقطة_شاشة_2026-04-05_164620-removebg-preview.png" alt="">
 
       <button class="btn btn-main" onclick="goToDetails()">
         عرض التفاصيل
       </button>
-
     </div>
   </div>
 
-  <!-- 🔹 الشاشة الثانية -->
+  <!-- الشاشة الثانية -->
   <div id="detailsScreen" class="hidden">
 
     <div class="header">📍 تفاصيل التسرب</div>
@@ -208,17 +218,24 @@ body{
 
       <iframe src="https://maps.google.com/maps?q=21.5433,39.1728&z=15&output=embed"></iframe>
 
-      <div class="overlay-card">
+      <!-- الكارد الأساسية -->
+      <div class="overlay-card" id="actionCard">
 
-        <div class="status danger">⚠ تم رصد تسريب مياه في الموقع</div>
+        <div class="status danger">⚠️ تم رصد تسريب مياه في الموقع</div>
 
-        <div style="color:#ef4444;">الرجاء اتخاذ الاجراء المناسب : </div>
+        <div style="color:#ef4444;">الرجاء اتخاذ الاجراء المناسب :</div>
 
         <div class="buttons">
           <button class="btn btn-red">إغلاق المحبس الرئيسي</button>
-          <button class="btn btn-blue">إرسال فريق صيانة</button>
+          <button class="btn btn-blue" onclick="sendMaintenance()">إرسال فريق صيانة</button>
         </div>
 
+      </div>
+
+      <!-- كارد النجاح -->
+      <div class="overlay-card success-card" id="successCard">
+        <div class="status safe">✅ تم إرسال فريق الصيانة</div>
+        <div>الفريق في الطريق 🚚</div>
       </div>
 
     </div>
@@ -235,11 +252,26 @@ body{
 function goToDetails(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("detailsScreen").classList.remove("hidden");
+
+  setTimeout(() => {
+    document.getElementById("actionCard").classList.add("show");
+  }, 100);
 }
 
 function goToHome(){
   document.getElementById("detailsScreen").classList.add("hidden");
   document.getElementById("homeScreen").classList.remove("hidden");
+
+  document.getElementById("actionCard").classList.remove("show");
+  document.getElementById("successCard").classList.remove("show");
+}
+
+function sendMaintenance(){
+  document.getElementById("actionCard").classList.remove("show");
+
+  setTimeout(() => {
+    document.getElementById("successCard").classList.add("show");
+  }, 300);
 }
 </script>
 
